@@ -29,4 +29,11 @@ public interface SetmealMapper {
     Page<Setmeal> pageQuery(SetmealPageQueryDTO setmealPageQueryDTO);
 
     void deleteByIds(List<Long> ids);
+
+    @AutoFill(OperationType.UPDATE)
+    void update(Setmeal setmeal);
+
+
+    @Select("select * from setmeal where id = #{id}")
+    Setmeal getById(Long id);
 }
