@@ -25,15 +25,28 @@ import java.time.LocalDateTime;
 public class AutoFillAspect {
 
 
+
+    // 切点
+
+    /**
+     * 任何类型 com.sky.mapper.类.方法.(任何参数) and 包含AutoFill的注解
+     */
     @Pointcut("execution(* com.sky.mapper.*.*(..)) && @annotation(com.sky.annotation.AutoFill) ")
     public void autoFillPointCut(){}
 
 
+    /**
+     * 前置通知
+     * @param joinpoint
+     */
     @Before("autoFillPointCut()")
     public void autoFill(JoinPoint joinpoint){
 
         MethodSignature signature = (MethodSignature) joinpoint.getSignature();
+        //获取注解信息
         AutoFill annotation = signature.getMethod().getAnnotation(AutoFill.class);
+
+        //获取操作类型
         OperationType operationType = annotation.value();
 
         Object[] args = joinpoint.getArgs();
@@ -44,6 +57,7 @@ public class AutoFillAspect {
 
         Object entity = args[0];
 
+        //获取设置参数
         LocalDateTime localDateTime = LocalDateTime.now();
         Long currentId = BaseContext.getCurrentId();
 
