@@ -33,6 +33,7 @@ public interface DishMapper {
     @Select("select * from dish where id = #{id}")
     Dish getById(Long id);
 
+
     void deleteByIds(List<Long> ids);
 
 
@@ -41,4 +42,8 @@ public interface DishMapper {
 
     @Select(" select * from dish where category_id = #{categoryId}")
     List<Dish> getByCategoryId(Long categoryId);
+
+
+    List<Dish> list(Dish dish);
+
 }
